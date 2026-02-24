@@ -3,16 +3,4 @@
 {% block title %}Hello HomePageController!{% endblock %}
 
 {% block body %}
-<div class="example-wrapper">
-    <ul>
-        {% for StudentsName in StudentsNames %}
-            <li>{{ StudentsName | upper }}</li>
-        {% if StudentsAges > 18 %}
-        Vous êtes majeur
-        {% else %}
-        Vous êtes mineur
-        {% endif %}
-        {% endfor %}
-    </ul>
-</div>
 {% endblock %}

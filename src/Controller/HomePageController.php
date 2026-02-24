@@ -12,9 +12,11 @@ final class HomePageController extends AbstractController
     public function index(): Response
     {
         $StudentsNames = ['Alice', 'Bob', 'Charlie', 'David', 'Eve'];
-        $StudentsAges = [20, 22, 19, 21, 23];
+        $StudentsAges = [20, 22, 17, 21, 23];
         return $this->render('home_page/index.html.twig', [
-            'controller_name' => 'HomePageController',
+            // 'controller_name' => 'HomePageController',
+            'StudentsNames' => $StudentsNames,
+            'StudentsAges' => $StudentsAges
         ]);
     }
 }

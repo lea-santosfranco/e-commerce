@@ -27,9 +27,14 @@ final class CategorieController extends AbstractController
         $form = $this->createForm(CategorieFormType::class, $category);
             $form->handleRequest($request);
 
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($category);
+                $entityManager->flush();
+            }
+
         return $this->render('categorie/newCategorie.html.twig', [
             // 'controller_name' => 'CategorieController',
-            "form" => $form->createView(),
+            "form" => $form->createView()
         ]);
     }
 }

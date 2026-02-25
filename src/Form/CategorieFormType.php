@@ -20,6 +20,7 @@ class CategorieFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Categorie::class,
+            "csrf_protection" => true,
         ]);
     }
 }

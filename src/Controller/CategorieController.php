@@ -2,21 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Form\CategorieFormType;
 use App\Entity\Categorie;
+use App\Form\CategorieFormType;
+use App\Repository\CategorieRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 final class CategorieController extends AbstractController
 {
     #[Route('/categorie', name: 'app_categorie')]
-    public function index(): Response
+    public function index(CategorieRepository $repo): Response
     {
+        $categories = $repo->findAll();
         return $this->render('categorie/index.html.twig', [
             'controller_name' => 'CategorieController',
+            'categories' => $categories
         ]);
     }
     #[Route('/categorie/new', name: 'app_categorie_new')]
@@ -30,6 +33,7 @@ final class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($category);
             $entityManager->flush();
+            return $this->redirectToRoute('app_categorie');
         }
 
         return $this->render('categorie/newCategorie.html.twig', [
@@ -53,5 +57,12 @@ final class CategorieController extends AbstractController
             // 'controller_name' => 'CategorieController',
             "form" => $form->createView()
         ]);
+    }
+    #[Route('/categorie/delete/{id}', name: 'app_categorie_delete')]
+    public function deleteCategorie(EntityManagerInterface $entityManager, Categorie $categorie): Response
+    {
+        $entityManager->remove($categorie);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_categorie');
     }
 }

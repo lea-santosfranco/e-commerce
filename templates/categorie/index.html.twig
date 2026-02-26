@@ -1,20 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategorieController!{% endblock %}
+{% block title %}Bienvenue{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/e-commerce/e-commerce/src/Controller/CategorieController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/e-commerce/e-commerce/templates/categorie/index.html.twig</code></li>
-    </ul>
-</div>
+<table class ="table">
+    <tr>
+        <th>Nom de la catégorie</th>
+        <th>Actions</th>
+    </tr>
+    {% for category in categories %}
+    <tr>
+    <td>
+        {{category.name}}   
+    </td>
+    <td>
+        <a class="btn btn-primary" href="{{ path("app_categorie_update", {"id": category.id}) }}">Modifier</a>
+        <a class="btn btn-danger" href="{{ path("app_categorie_delete", {"id": category.id}) }}">Supprimer</a>
+    </td>
+    </tr>
+    {% else %}
+    <p>Aucune catégorie à afficher</p>
+    {% endfor %}
+</table>
+<a class="btn btn-success" href="{{ path("app_categorie_new") }}">Créer une catégorie</a>
 {% endblock %}

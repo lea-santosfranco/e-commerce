@@ -4,6 +4,7 @@
 
 {% block body %}
 <h1>Liste des catégories</h1>
+{% include('layouts/_flash_message.html.twig') %}
 <table class ="table">
     <tr>
         <th>Nom de la catégorie</th>
@@ -15,8 +16,8 @@
         {{category.name}}   
     </td>
     <td>
-        <a class="btn btn-primary" href="{{ path("app_categorie_update", {"id": category.id}) }}">Modifier</a>
-        <a class="btn btn-danger" href="{{ path("app_categorie_delete", {"id": category.id}) }}">Supprimer</a>
+        <a class="btn btn-outline-primary" href="{{ path("app_categorie_update", {"id": category.id}) }}">Modifier</a>
+        <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')" class="btn btn-danger" href="{{ path("app_categorie_delete", {"id": category.id}) }}">Supprimer</a>
     </td>
     </tr>
     {% else %}

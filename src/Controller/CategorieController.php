@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class CategorieController extends AbstractController
 {
-    #[Route('/categorie', name: 'app_categorie')]
+    #[Route('/admin/categorie', name: 'app_categorie')]
     public function index(CategorieRepository $repo): Response
     {
         $categories = $repo->findAll();
@@ -22,7 +22,7 @@ final class CategorieController extends AbstractController
             'categories' => $categories
         ]);
     }
-    #[Route('/categorie/new', name: 'app_categorie_new')]
+    #[Route('/admin/categorie/new', name: 'app_categorie_new')]
     public function addCategorie(EntityManagerInterface $entityManager, Request $request): Response
     {
         $category = new Categorie();
@@ -33,6 +33,7 @@ final class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($category);
             $entityManager->flush();
+            $this->addFlash('success', "La catégorie a été ajoutée avec succès !");
             return $this->redirectToRoute('app_categorie');
         }
 
@@ -42,7 +43,7 @@ final class CategorieController extends AbstractController
         ]);
     }
 
-    #[Route('/categorie/update/{id}', name: 'app_categorie_update')]
+    #[Route('/admin/categorie/update/{id}', name: 'app_categorie_update')]
     public function updateCategorie(EntityManagerInterface $entityManager, Request $request, Categorie $categorie): Response
     {
         $form = $this->createForm(CategorieFormType::class, $categorie);
@@ -50,6 +51,7 @@ final class CategorieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('info', "La catégorie a été mise à jour avec succès !");
                 return $this->redirectToRoute('app_categorie');
         }
 
@@ -58,11 +60,12 @@ final class CategorieController extends AbstractController
             "form" => $form->createView()
         ]);
     }
-    #[Route('/categorie/delete/{id}', name: 'app_categorie_delete')]
+    #[Route('/admin/categorie/delete/{id}', name: 'app_categorie_delete')]
     public function deleteCategorie(EntityManagerInterface $entityManager, Categorie $categorie): Response
     {
         $entityManager->remove($categorie);
         $entityManager->flush();
+        $this->addFlash('danger', "La catégorie a été supprimée avec succès !"); #addFlash() est une méthode de la classe AbstractController qui permet d'ajouter un message flash à la session. Le premier argument est le type du message (par exemple "success", "danger", "info"), et le deuxième argument est le contenu du message.
         return $this->redirectToRoute('app_categorie');
     }
 }

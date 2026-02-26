@@ -18,6 +18,7 @@
     <td>
         <a class="btn btn-outline-primary" href="{{ path("app_categorie_update", {"id": category.id}) }}">Modifier</a>
         <a onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')" class="btn btn-danger" href="{{ path("app_categorie_delete", {"id": category.id}) }}">Supprimer</a>
+        {# #onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')" est un attribut qui affiche une boîte de dialogue de confirmation lorsque l'utilisateur clique sur le lien de suppression. Si l'utilisateur confirme, la fonction retourne true et le lien est suivi, sinon elle retourne false et le lien n'est pas suivi. #}
     </td>
     </tr>
     {% else %}

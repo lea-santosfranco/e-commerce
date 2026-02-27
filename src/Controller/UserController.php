@@ -21,7 +21,7 @@ final class UserController extends AbstractController
             'users' => $users
         ]);
     }
-    #[Route('/user/{id}', name: 'app_user_to-editor')]
+    #[Route('/user/{id}/to/editor', name: 'app_user_to-editor')]
     public function changeRole(EntityManagerInterface $entityManager, User $user): Response
     {
         $user->setRoles(['ROLE_EDITOR', 'ROLE_USER']);

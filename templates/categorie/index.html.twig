@@ -3,6 +3,7 @@
 {% block title %}Bienvenue{% endblock %}
 
 {% block body %}
+<div class="container">
 <h1>Liste des catégories</h1>
 {% include('layouts/_flash_message.html.twig') %}
 <table class ="table">
@@ -26,4 +27,5 @@
     {% endfor %}
 </table>
 <a class="btn btn-success" href="{{ path("app_categorie_new") }}">Créer une catégorie</a>
+</div>
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block title %}SubCategory{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>SubCategory</h1>
 
     <table class="table">
@@ -21,6 +22,6 @@
     <a href="{{ path('app_sub_category_index') }}">back to list</a>
 
     <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">edit</a>
-
+</div>
     {{ include('sub_category/_delete_form.html.twig') }}
 {% endblock %}

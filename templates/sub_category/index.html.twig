@@ -3,6 +3,8 @@
 {% block title %}SubCategory index{% endblock %}
 
 {% block body %}
+
+<div class="container">
     <h1>SubCategory index</h1>
 
     <table class="table">
@@ -30,6 +32,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+</div>
     <a href="{{ path('app_sub_category_new') }}">Create new</a>
 {% endblock %}
+

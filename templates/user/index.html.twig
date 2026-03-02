@@ -20,17 +20,29 @@
             <td>{{user.lastName}}</td>
             <td>{{user.email}}</td>
             <td>
-                {%if 'ROLE_ADMIN' in user.roles%}
-                    <span class ="text-primary">Admin</span>
-                {%elseif 'ROLE_EDITOR' in user.roles%}
-                    <span class ="text-success">Editeur</span>
-                {%else%}
-                    <span class ="text-secondary">Utilisateur</span>
-                {%endif%}
-            </td>
-            <td><a href="" class="btn btn-danger">Supprimer</a></td>
-    </tr>
-    {% endfor %}
+            {% if ('ROLE_ADMIN' in user.roles) %}
+                        <span class="text-primary">Administrateur</span> 
+                    {% elseif ('ROLE_EDITOR' in user.roles) %}
+                         <span class="text-success">Editeur</span> 
+                    {% else %}
+                         <span class="text-secondary">Client</span> 
+                    {% endif %}
+                        {# {% for role in user.roles %}
+                            {{ role }}
+                        {% endfor %} #}
+                    </td>
+                    <td>
+                        {% if ('ROLE_ADMIN' in user.roles) == false %}
+                            {% if ('ROLE_EDITOR' in user.roles) == false %}
+                                <a onclick= "return confirm('Voulez vous vraiment affecter ce rôle à ce user ?')" class="btn btn-outline-primary" href="{{ path('app_user_change_role', {'id': user.id, 'role': 'ROLE_EDITOR'}) }}">Ajouter le rôle éditeur</a>
+                            {% else %}
+                                  <a onclick= "return confirm('Voulez vous vraiment retirer ce rôle à ce user ?')" class="btn btn-outline-danger" href="{{ path('app_user_remove_editor_role', {'id':user.id}) }}" >Retirer le rôle éditeur</a>
+                            {% endif %}
+                            <a onclick= "return confirm('Voulez vous vraiment supprimer cet utilisateur ?')" href="{{ path('app_user_remove', {'id':user.id}) }}" class="btn btn-danger">Supprimer</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
 </table>
 </div>
 {% endblock %}

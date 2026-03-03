@@ -7,11 +7,13 @@ use App\Form\SubCategoryType;
 use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/sub/category')]
+#[IsGranted('ROLE_ADMIN')]
 final class SubCategoryController extends AbstractController
 {
     #[Route(name: 'app_sub_category_index', methods: ['GET'])]

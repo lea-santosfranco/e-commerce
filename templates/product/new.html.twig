@@ -8,6 +8,15 @@
 
     {{ include('product/_form.html.twig') }}
 
+    {{ form_start(form) }}
+    {{ form_row(form.name, {attr: {class: 'form form-control'}}) }}
+    {{ form_row(form.description, {attr: {class: 'form form-control'}}) }}
+    {{ form_row(form.price, {attr: {class: 'form form-control'}}) }}
+    {{ form_row(form.image, {attr: {class: 'form'}}) }}
+    {{ form_row(form.subCategories, {attr: {class: 'form form-control'}}) }}
+    <button class="btn btn-primary mt-3">{{ button_label|default('Sauvegarder') }}</button>
+    {{ form_end(form) }}
+
     <a href="{{ path('app_product_index') }}">back to list</a>
 </div>
 {% endblock %}

@@ -14,6 +14,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th>Stock</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
                 <td>{{ product.name }}</td>
                 <td>{{ product.description | slice (0,60) }}...</td>
                 <td>{{ product.price }}</td>
+                <td>{{ product.stock }}</td>
                 <td>
                     <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>

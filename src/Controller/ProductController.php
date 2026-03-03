@@ -47,6 +47,9 @@ final class ProductController extends AbstractController
             } catch (FileException $exception) {}
             $product->setImage($newFileImageName);
         }
+            $entityManager->persist($product);
+            $entityManager->flush();
+            
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
 

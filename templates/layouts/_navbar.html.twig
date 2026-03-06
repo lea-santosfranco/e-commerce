@@ -18,10 +18,10 @@
             Catégories
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{path("app_categorie")}}">Voir toutes les catégories</a></li>
-            <li><a class="dropdown-item" href="{{path("app_categorie_new")}}">Créer une catégorie</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{{path("app_user")}}">Utilisateurs</a></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
           </ul>
         </li>
         {%if is_granted("ROLE_ADMIN")%}
@@ -30,7 +30,11 @@
             Admin
           </a>
           <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{path("app_categorie")}}">Voir toutes les catégories</a></li>
+            <li><a class="dropdown-item" href="{{path("app_categorie_new")}}">Créer une catégorie</a></li>
             <li><a class="dropdown-item" href="{{path("app_sub_category_index")}}">Sous-catégories</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{path("app_user")}}">Utilisateurs</a></li>
             <li><a class="dropdown-item" href="{{path("app_product_index")}}">Produits</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>

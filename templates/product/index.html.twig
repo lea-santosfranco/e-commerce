@@ -1,44 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}Produits
+{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Product index</h1>
-    {% include 'layouts/_flash_message.html.twig' %}
+	<div class="container">
+		<h1>Produits</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description | slice (0,60) }}...</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.stock }}</td>
-                <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		{% include 'layouts/_flash_message.html.twig' %}
 
-    <a href="{{ path('app_product_new') }}">Create new</a>
-</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nom</th>
+					<th>Description</th>
+					<th>Prix</th>
+					<th>Stock</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in products %}
+					<tr>
+						<td>{{ product.id }}</td>
+						<td>{{ product.Name }}</td>
+						<td>{{ product.Description|slice(0,60) }}
+							...</td>
+						<td>{{ product.Price }}</td>
+						<td>
+							{% if product.stock > 0 %}
+								{{ product.stock }}
+							{% else %}
+								<span class="text-danger">Stock épuisé</span>
+							{% endif %}
+						</td>
+						<td>
+							<a class="btn btn-outline-info" href="{{ path('app_product_show', {'id': product.id}) }}">Voir</a>
+							<a class="btn btn-outline-warning" href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+							<a class="btn btn-outline-success" href="{{ path('app_product_stock_add', {'id': product.id}) }}">Ajouter du stock</a>
+							<a class="btn btn-danger" href="{{ path('app_product_delete', {'id': product.id}) }}">Supprimer</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="5">aucun élement enregistré</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a class="btn btn-outline-primary" href="{{ path('app_product_new') }}">Créer un nouveau produit</a>
+	</div>
+
 {% endblock %}

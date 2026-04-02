@@ -1,0 +1,57 @@
+#Test CI/CD
+# Le nom qui s'affichera dans l'interface GitHub Actions
+name: Tests Symfony E-commerce
+# ------------------------------------------------------------------
+# DÉCLENCHEURS (TRIGGERS)
+# Définit quand ce workflow doit s'exécuter
+# ------------------------------------------------------------------
+on: 
+  push:
+    branches: [ master,main, develop ]  # Se lance à chaque push (commit) sur les branches principales
+  pull_request:
+    branches: [ master,main ]  # Se lance quand une PR est ouverte ou mise à jour vers 'main'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest  # Utilise une machine virtuelle Linux (dernière version Ubuntu stable)
+
+    # ------------------------------------------------------------------
+    # ÉTAPES (STEPS)
+    # La suite d'actions à exécuter séquentiellement
+    # ------------------------------------------------------------------
+    steps:
+    # 1. Récupération du code source
+    # Clone votre dépôt dans l'environnement virtuel pour que le script puisse y accéder
+    - name: Checkout
+      uses: actions/checkout@v4
+    # 2. Configuration de l'environnement PHP
+    # Utilise l'action populaire 'setup-php' pour installer PHP et les extensions
+    - name: Setup PHP 8.3  
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'  # Force la version de PHP correspondant à votre projet
+        extensions: sqlite3  # Installe SQLite (souvent utilisé pour des tests rapides sans base de données lourde)
+
+    # 3. Mise en cache des dépendances Composer
+    # Permet d'accélérer les builds suivants en sauvegardant le dossier 'vendor'
+    - name: Cache Composer
+      uses: actions/cache@v4
+      with:
+        path: vendor  # Le dossier à mettre en cache
+        # Crée une clé unique basée sur le contenu du fichier composer.lock
+        key: composer-${{ hashFiles('**/composer.lock') }}
+
+    # 4. Installation des dépendances du projet
+    # Télécharge les bibliothèques nécessaires au fonctionnement de Symfony    
+    - name: Install dependencies
+      # --prefer-dist accélère le téléchargement, --no-progress réduit le bruit dans les logs
+      run: composer install --prefer-dist --no-progress
+
+    # 5. Exécution des tests unitaires et fonctionnels
+    # Lance PHPUnit pour vérifier que le code fonctionne comme prévu
+    - name: Run PHPUnit tests
+      run: |
+        # Lance les tests avec un affichage détaillé et en couleur
+        php bin/phpunit --colors=always  
+        # Affiche un résumé de la couverture de code dans la console
+        php bin/phpunit --coverage-text
